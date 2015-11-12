@@ -1093,7 +1093,6 @@ class dump(DumpCommand):
             pass
 
         numtotal = 0
-
         # print "Writing annotations..."
         for frame in allframes:
             if frame in byframe:
@@ -1248,6 +1247,7 @@ class reload(Command):
         jobs = session.query(Job)
         jobs = jobs.join(Segment).join(Video).join(Label).filter(Video.slug == slug)
         labels = session.query(Label).join(Video).filter(Video.slug == slug)
+        vid = session.query(Video).filter(Video.slug == slug).one()
 
         ids = []
         exist = False
@@ -1258,6 +1258,8 @@ class reload(Command):
                 continue
             id = int(items[0])
             frame = int(items[5])
+            if frame >= vid.totalframes:
+              continue
             label = items[9][1:-1]
             # TODO(Wei Liu): Add support for attributes
             attributes = items[10:]
