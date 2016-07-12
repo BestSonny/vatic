@@ -74,12 +74,14 @@ function ui_setup(job)
                   "<li><code>c/m</code>  step backward 1 frame</li>" +
                   "<li><code>g/h</code>  jump to next labeled frames</li>" +
                   "<li><code>s/l</code>  jump to previous labeled frames</li>" +
-                  "<li><code>d/k</code>  jump backward 10 frames</li>" +
                   "<li><code>&nbsp;b&nbsp;</code>  toggles hide boxes</li>" +
                   "<li><code>w/o</code>  toggles hide labels</li>" +
                   "<li><code>q/p</code>  toggles disable resize</li>" +
                   "</ul>" +
               "</div> " +
+              "<div id='interval'>" +
+                  "Interval: <textarea id='intervalarea'/>" +
+              "</div>" +
               "<div id='comments'>" +
                   "Comments (if any):<textarea id='commentarea'/>" +
               "</div>" +
@@ -118,6 +120,18 @@ function ui_setup(job)
     $("#keyshortcuts").css({"width": 400 + "px",
                             "margin": "0 auto",
                             "float": "left"});
+
+    $("#interval").css({"width": 300 + "px",
+                        "margin": "0 auto",
+                        "float": "right"});
+
+    $("#intervalarea").css({"width": 30 + "px",
+                           "height": 20 + "px",
+                           "margin": "15 auto",
+                           "padding-left": "15 px",
+                           "vertical-align": "middle",
+                           "resize": "none"});
+    $("#intervalarea").val(job.interval);
 
     $("#comments").css({"width": 300 + "px",
                         "margin": "0 auto",
@@ -275,6 +289,11 @@ function ui_setupbuttons(job, player, tracks)
         eventlog("speedcontrol", "FPS = " + player.fps + " and delta = " + player.playdelta);
     });
 
+    $("#intervalarea").focusin(function() {
+        console.log("ui disabled");
+        ui_disable();
+    });
+
     $("#commentarea").focusin(function() {
         console.log("ui disabled");
         ui_disable();
@@ -298,10 +317,17 @@ function ui_setupbuttons(job, player, tracks)
         return this.replace(/["]{1}/gi,"&quot;");
     }
 
+    $("#intervalarea").focusout(function() {
+        console.log("ui enabled");
+        job.interval = $(this).val().removelinebreak();
+        console.log("interval added: " + job.interval);
+        ui_enable();
+    });
+
     $("#commentarea").focusout(function() {
         console.log("ui enabled");
         job.comment = encode_utf8($(this).val().removelinebreak().delquote());
-        console.log("comment added:" + job.comment);
+        console.log("comment added: " + job.comment);
         ui_enable();
     });
 
@@ -623,7 +649,7 @@ function ui_submit(job, tracks)
 {
     console.dir(tracks);
 
-    completeinfo = "[[\"" + job.comment + "\"]," + tracks.serialize() + "]";
+    completeinfo = "[[\"" + job.comment + "\"]," + "[" + job.interval + "]," + tracks.serialize() + "]";
     console.log("Start submit - status: " + completeinfo);
 
     if (!mturk_submitallowed())

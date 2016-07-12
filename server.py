@@ -49,7 +49,8 @@ def getjob(id, verified):
             "training":     int(training),
             "labels":       labels,
             "attributes":   attributes,
-            "comment":      job.comment}
+            "comment":      job.comment,
+            "interval":     job.interval}
 
 @handler()
 def getboxesforjob(id):
@@ -111,7 +112,8 @@ def savejob(id, data):
     job.comment = data[0][0]
     if job.comment == "null":
         job.comment = "NULL"
-    tracks = data[1]
+    job.interval = data[1][0]
+    tracks = data[2]
 
     for path in job.paths:
         session.delete(path)
@@ -127,7 +129,7 @@ def validatejob(id, data):
     job = session.query(Job).get(id)
 
     # data contains comment and tracks
-    tracks = data[1]
+    tracks = data[2]
 
     paths = readpaths(tracks)
 

@@ -14,6 +14,7 @@ function Job(data)
     this.thisid = null;
     this.labels = null;
     this.comment = null;
+    this.interval = 1;
 
     this.frameurl = function(i)
     {
@@ -54,6 +55,7 @@ function job_import(data)
     job.comment = data["comment"];
     if(job.comment == "NULL" || job.comment == "null")
         job.comment = null;
+    job.interval = data["interval"];
 
     console.log("Job configured!");
     console.log("  Slug: " + job.slug);
@@ -81,6 +83,7 @@ function job_import(data)
         }
     }
     console.log("  Comment: " + job.comment);
+    console.log("  interval: " + job.interval);
 
     return job;
 }

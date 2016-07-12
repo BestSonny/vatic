@@ -136,6 +136,7 @@ class Job(turkic.models.HIT):
                                                     cascade = "all,delete"))
     istraining     = Column(Boolean, default = False)
     comment        = Column(Text(collation="utf8_general_ci"))
+    interval       = Column(Integer)
 
     def getpage(self):
         return "?id={0}".format(self.id)
