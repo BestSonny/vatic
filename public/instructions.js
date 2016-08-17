@@ -116,6 +116,10 @@ function instructions(job, h)
         "<li><code>d/k</code>  jump backward 10 frames</li><br>" +
         "<li><code>v/n</code>  step forward 1 frame</li><br>" +
         "<li><code>c/m</code>  step backward 1 frame</li><br>" +
+        "<li><code>1/0</code>  step forward/backward 1 frame</li><br>" +
+        "<li><code>2/9</code>  step forward/backward 2 frames</li><br>" +
+        "<li><code>3/8</code>  step forward/backward 3 frames</li><br>" +
+        "<li><code>5/6</code>  step forward/backward 5 frames</li><br>" +
         "<li><code>g/h</code>  jump to next labeled frames</li><br>" +
         "<li><code>s/l</code>  jump to previous labeled frames</li><br>" +
         "<li><code>&nbsp;b&nbsp;</code>  toggles hide boxes</li><br>" +

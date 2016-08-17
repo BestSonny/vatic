@@ -72,6 +72,10 @@ function ui_setup(job)
                   "<li><code>d/k</code>  jump backward 10 frames</li>" +
                   "<li><code>v/n</code>  step forward 1 frame</li>" +
                   "<li><code>c/m</code>  step backward 1 frame</li>" +
+                  "<li><code>1/0</code>  step forward/backward 1 frame</li>" +
+                  "<li><code>2/9</code>  step forward/backward 2 frames</li>" +
+                  "<li><code>3/8</code>  step forward/backward 3 frames</li>" +
+                  "<li><code>5/6</code>  step forward/backward 5 frames</li>" +
                   "<li><code>g/h</code>  jump to next labeled frames</li>" +
                   "<li><code>s/l</code>  jump to previous labeled frames</li>" +
                   "<li><code>&nbsp;b&nbsp;</code>  toggles hide boxes</li>" +
@@ -436,15 +440,39 @@ function ui_setupkeyboardshortcuts(job, player, tracks)
                 // 102 ==> f, 106 ==> j
                 skip = job.skip > 0 ? job.skip : 10;
             }
-            else if (keycode == 118 || keycode == 110)
+            else if (keycode == 118 || keycode == 110 || keycode == 49)
             {
-                // 118 ==> v, 110 ==> n
+                // 118 ==> v, 110 ==> n, 49 ==> 1
                 skip = job.skip > 0 ? job.skip : 1;
             }
-            else if (keycode == 99 || keycode == 109)
+            else if (keycode == 99 || keycode == 109 || keycode == 48)
             {
-                // 99 ==> c, 109 ==> m
+                // 99 ==> c, 109 ==> m, 48 ==> 0
                 skip = job.skip > 0 ? -job.skip : -1;
+            }
+            else if (keycode == 50) {
+                // 50 ==> 2
+                skip = 2;
+            }
+            else if (keycode == 51) {
+                // 51 ==> 3
+                skip = 3;
+            }
+            else if (keycode == 53) {
+                // 53 ==> 5
+                skip = 5;
+            }
+            else if (keycode == 54) {
+                // 54 ==> 6
+                skip = -5;
+            }
+            else if (keycode == 56) {
+                // 56 ==> 8
+                skip = -3;
+            }
+            else if (keycode == 57) {
+                // 57 ==> 9
+                skip = -2;
             }
             else if (keycode == 115 || keycode == 108)
             {
